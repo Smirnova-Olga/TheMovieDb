@@ -30,7 +30,7 @@ class _DropdownSortButtonState extends State<DropdownSortButton> {
       autofocus: false,
       buttonDecoration: BoxDecoration(
         color: AppColors.mainDarkBlue,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(40.0),
       ),
       dropdownWidth: 180,
       dropdownPadding: EdgeInsets.zero,
