@@ -130,7 +130,7 @@ class _ScoreWidget extends StatelessWidget {
                 width: 50,
                 height: 50,
                 child: RadiusScoreWidget(
-                  persent: 0.72,
+                  percent: 0.72,
                   fillColor: Colors.black,
                   lineColor: Colors.green,
                   freeColor: Colors.blueGrey,
@@ -140,7 +140,7 @@ class _ScoreWidget extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.blue,
                     ),
-                   ),
+                  ),
                 ),
               ),
               Padding(

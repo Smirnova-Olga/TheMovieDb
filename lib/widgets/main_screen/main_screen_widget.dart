@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb/widgets/movie_list/movie_list_widget.dart';
-import 'package:themoviedb/widgets/news_details/news_details_widget.dart';
+import 'package:themoviedb/widgets/news/new_widget.dart';
+
 import 'package:themoviedb/widgets/tv_shows_list/tv_shows_list_widget.dart';
 
 class MainScreenWidget extends StatefulWidget {
@@ -25,11 +26,17 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('TMDB'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: IndexedStack(
         index: _selectedTab,
         children: const [
-          NewsDetailsWidget(),
+          NewsWidget(),
           MovieListWidget(),
           TvShowsListWidget(),
         ],

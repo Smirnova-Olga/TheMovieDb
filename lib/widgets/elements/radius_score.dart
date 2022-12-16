@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class RadiusScoreWidget extends StatelessWidget {
   final Widget child;
-  final double persent;
+  final double percent;
   final Color fillColor;
   final Color lineColor;
   final Color freeColor;
@@ -11,7 +11,7 @@ class RadiusScoreWidget extends StatelessWidget {
   const RadiusScoreWidget({
     super.key,
     required this.child,
-    required this.persent,
+    required this.percent,
     required this.fillColor,
     required this.lineColor,
     required this.freeColor,
@@ -23,7 +23,7 @@ class RadiusScoreWidget extends StatelessWidget {
     return Stack(fit: StackFit.expand, children: [
       CustomPaint(
           painter: MyPainter(
-        percent: persent,
+        percent: percent,
         fillColor: fillColor,
         lineColor: lineColor,
         freeColor: freeColor,

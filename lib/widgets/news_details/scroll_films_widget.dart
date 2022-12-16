@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb/Theme/app_colors.dart';
+
 import 'package:themoviedb/images.dart';
 import 'package:themoviedb/widgets/elements/dropdown_sort_button.dart';
 import 'package:themoviedb/widgets/elements/radius_score.dart';
@@ -76,7 +76,7 @@ class MovieSideScrollWidget extends StatelessWidget {
                           width: 33,
                           height: 33,
                           child: RadiusScoreWidget(
-                            persent: 0.15,
+                            percent: 0.15,
                             fillColor: Colors.black,
                             lineColor: Colors.green,
                             freeColor: Colors.blueGrey,
