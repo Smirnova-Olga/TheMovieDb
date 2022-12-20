@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb/domain/data_providers/session_data_provider.dart';
 import 'package:themoviedb/ui/widgets/movie_list/movie_list_widget.dart';
 import 'package:themoviedb/ui/widgets/news/new_widget.dart';
 
@@ -28,7 +29,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         title: const Text('TMDB'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => SessionDataProvider().setSessionId(null),
             icon: const Icon(Icons.search),
           )
         ],

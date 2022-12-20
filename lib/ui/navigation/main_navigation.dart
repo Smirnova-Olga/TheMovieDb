@@ -6,10 +6,10 @@ import 'package:themoviedb/ui/widgets/movie_details/movie_details_widget.dart';
 import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_widget.dart';
 
 abstract class MainNavigationRouteNames {
-  static const auth = '/auth';
-  static const mainScreen = '/main_screen';
-  static const movieDetails = '/main_screen/movie_details';
-  static const tvShowsDetails = '/main_screen/tv_shows_details';
+  static const auth = 'auth';
+  static const mainScreen = '/';
+  static const movieDetails = '/movie_details';
+  static const tvShowsDetails = '/tv_shows_details';
 }
 
 class MainNavigation {
@@ -18,13 +18,12 @@ class MainNavigation {
       : MainNavigationRouteNames.auth;
 
   final routes = <String, Widget Function(BuildContext)>{
-    '/auth': (context) => AuthProvider(
+    MainNavigationRouteNames.auth: (context) => AuthProvider(
           model: AuthModel(),
           child: const AuthWidget(),
         ),
-    '/main_screen': (context) => const MainScreenWidget(),
+    MainNavigationRouteNames.mainScreen: (context) => const MainScreenWidget(),
   };
-
   Route<Object> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case MainNavigationRouteNames.movieDetails:
