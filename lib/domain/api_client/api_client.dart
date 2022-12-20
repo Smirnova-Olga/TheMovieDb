@@ -4,7 +4,7 @@ import 'dart:io';
 class ApiClient {
   final _client = HttpClient();
   static const _host = 'https://api.themoviedb.org/3';
-  static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
+  //static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
   static const _apiKey = '1d87a77efd969f6d54d1f9125d0283d7';
 
   Future<String> auth({
