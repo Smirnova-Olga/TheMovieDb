@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb/resources/resources.dart';
+import 'package:themoviedb/ui/navigation/main_navigation.dart';
 
 class TvShows {
   final int id;
@@ -78,7 +79,7 @@ class _TvShowsListWidgetState extends State<TvShowsListWidget> {
   void _onTvShowTap(int index) {
     final id = _tvShows[index].id;
     Navigator.of(context).pushNamed(
-      '/main_screen/tv_shows_details',
+      MainNavigationRouteNames.tvShowsDetails,
       arguments: id,
     );
   }
