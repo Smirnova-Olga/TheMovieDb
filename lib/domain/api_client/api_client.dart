@@ -5,7 +5,7 @@ class ApiClient {
   final _client = HttpClient();
   static const _host = 'https://api.themoviedb.org/3';
   static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
-  static const _apiKey = '0a2a46b5593a0978cc8e87ba34037430';
+  static const _apiKey = '1d87a77efd969f6d54d1f9125d0283d7';
 
   Future<String> auth({
     required String username,
