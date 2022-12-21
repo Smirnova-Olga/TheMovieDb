@@ -140,10 +140,7 @@ class _ScoreWidget extends StatelessWidget {
                   child: Text('72%'),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text('Пользовательский счет'),
-              ),
+              Text('Пользовательский счет'),
             ],
           ),
         ),
@@ -157,7 +154,7 @@ class _ScoreWidget extends StatelessWidget {
           child: Row(
             children: const [
               Icon(Icons.play_arrow),
-              Text('Воспроизвести'),
+              Text('Play trailer'),
             ],
           ),
         ),

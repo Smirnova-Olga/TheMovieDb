@@ -13,7 +13,7 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
       children: [
         const _TopPostersWidget(),
         const Padding(
-          padding: EdgeInsets.all(25.0),
+          padding: EdgeInsets.all(20.0),
           child: _MovieNameWidget(),
         ),
         const _ScoreWidget(),
@@ -21,12 +21,12 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Text(
               'Добро пожаловать на следующий уровень.',
               style: TextStyle(
                 fontStyle: FontStyle.italic,
-                fontSize: 21,
+                fontSize: 15,
                 color: Colors.white.withOpacity(0.7),
               ),
             ),
@@ -35,20 +35,20 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
         const Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Text(
               'Обзор',
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 20,
                 color: Colors.white,
               ),
             ),
           ),
         ),
         const Align(
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.center,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Text(
               'Поселившись в Грин Хилз, Соник стремится доказать, что у него есть все задатки настоящего героя. И геройское испытание не заставляет себя долго ждать: злодейский доктор Роботник вновь строит козни. На этот раз — с загадочным напарником Наклзом. Вместе они разыскивают бесценный изумруд, в котором заключены силы, способные уничтожать целые цивилизации. Соник объединяется с лисенком Тейлзом, чтобы отправиться в кругосветное путешествие и найти изумруд до того, как он попадет в плохие руки.',
               style: TextStyle(
@@ -122,7 +122,7 @@ class _ScoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         TextButton(
           onPressed: () {},
@@ -145,10 +145,8 @@ class _ScoreWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text('Пользовательский счет'),
-              ),
+              SizedBox(width: 10),
+              Text('Пользовательский счет'),
             ],
           ),
         ),
@@ -162,7 +160,7 @@ class _ScoreWidget extends StatelessWidget {
           child: Row(
             children: const [
               Icon(Icons.play_arrow),
-              Text('Воспроизвести'),
+              Text('Play trailer'),
             ],
           ),
         ),
@@ -181,7 +179,7 @@ class _SummeryWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           vertical: 10,
-          horizontal: 65,
+          horizontal: 70,
         ),
         child: Text(
           'APTA 01/04/2022 (ES) боевик, приключения, семейный, комедия 2h 2m',

@@ -56,7 +56,7 @@ class _NewsWidgetTrailersState extends State<NewsWidgetTrailers> {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            height: 306,
+            height: 500,
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 return ListView.builder(

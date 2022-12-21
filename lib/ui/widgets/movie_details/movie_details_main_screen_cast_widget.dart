@@ -94,7 +94,7 @@ class MovieDetailsMainScreenCastWidget extends StatelessWidget {
             padding: const EdgeInsets.all(3.0),
             child: TextButton(
               onPressed: () {},
-              child: const Text('Полный актёрский и съёмочный состав'),
+              child: const Text('Full Cast & Crew'),
             ),
           )
         ],
