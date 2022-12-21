@@ -21,7 +21,7 @@ class NotifierProvider<Model extends ChangeNotifier> extends InheritedNotifier {
 
   static Model? read<Model extends ChangeNotifier>(BuildContext context) {
     final widget = context
-        .getElementForInheritedWidgetOfExactType<NotifierProvider>()
+        .getElementForInheritedWidgetOfExactType<NotifierProvider<Model>>()
         ?.widget;
     return widget is NotifierProvider<Model> ? widget.model : null;
   }

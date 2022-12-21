@@ -26,7 +26,7 @@ class AuthModel extends ChangeNotifier {
     final password = passwordTextController.text;
 
     if (login.isEmpty || password.isEmpty) {
-      _errorMessage = 'Enter username and password';
+      _errorMessage = 'Заполните логин и пароль';
       notifyListeners();
       return;
     }
@@ -39,8 +39,19 @@ class AuthModel extends ChangeNotifier {
         username: login,
         password: password,
       );
-    } catch (e) {
-      _errorMessage = 'Incorrect username or password';
+    } on ApiClientException catch (e) {
+      switch (e.type) {
+        case ApiClientExceptionType.network:
+          _errorMessage =
+              'Сервер не доступен. Проверте подключение к интернету';
+          break;
+        case ApiClientExceptionType.auth:
+          _errorMessage = 'Неправильный логин пароль!';
+          break;
+        case ApiClientExceptionType.other:
+          _errorMessage = 'Произошла ошибка. Попробуйте еще раз';
+          break;
+      }
     }
     _isAuthProgress = false;
     if (_errorMessage != null) {
@@ -49,12 +60,14 @@ class AuthModel extends ChangeNotifier {
     }
 
     if (sessionId == null) {
-      _errorMessage = 'Unknown error, please try again';
+      _errorMessage = 'Неизвестная ошибка, поторите попытку';
       notifyListeners();
       return;
     }
     await _sessionDataProvider.setSessionId(sessionId);
-    unawaited(Navigator.of(context)
-        .pushReplacementNamed(MainNavigationRouteNames.mainScreen));
+    unawaited(
+      Navigator.of(context)
+          .pushReplacementNamed(MainNavigationRouteNames.mainScreen),
+    );
   }
 }
