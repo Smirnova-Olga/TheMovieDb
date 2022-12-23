@@ -1,100 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb/resources/resources.dart';
-import 'package:themoviedb/ui/navigation/main_navigation.dart';
+import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
+import 'package:themoviedb/domain/api_client/api_client.dart';
+import 'package:themoviedb/ui/widgets/tv_shows_list/tv_shows_list_model.dart';
 
-class TvShows {
-  final int id;
-  final AssetImage imageName;
-  final String title;
-  final String time;
-  final String description;
-
-  TvShows({
-    required this.id,
-    required this.imageName,
-    required this.title,
-    required this.time,
-    required this.description,
-  });
-}
-
-class TvShowsListWidget extends StatefulWidget {
-  const TvShowsListWidget({super.key});
-
-  @override
-  State<TvShowsListWidget> createState() => _TvShowsListWidgetState();
-}
-
-class _TvShowsListWidgetState extends State<TvShowsListWidget> {
-  final _tvShows = [
-    TvShows(
-      id: 8,
-      imageName: const AssetImage(AppImages.rickimorti),
-      title: 'Рик и Морти',
-      time: '2022',
-      description:
-          'В центре сюжета — школьник по имени Морти и его дедушка Рик. Морти — самый обычный мальчик, который ничем не отличается от своих сверстников. А вот его дедуля занимается необычными научными исследованиями и зачастую полностью неадекватен. Он может в любое время дня и ночи схватить внука и отправиться вместе с ним в межпространственные приключения с помощью построенной из разного хлама летающей тарелки, которая способна перемещаться сквозь временной тоннель. Каждый раз эта парочка оказывается в самых неожиданных местах и самых нелепых ситуациях.',
-    ),
-    TvShows(
-      id: 14,
-      imageName: const AssetImage(AppImages.anatomy),
-      title: 'Анатомия страсти ',
-      time: '30 мар 2005',
-      description:
-          'В центре событий — молодая женщина-хирург Мередит Грей, дочь известного врача Эллис Грей. Она работает в городской больнице Сиэтла, и её коллеги, такие же начинающие врачи, как она. Хирурги оперируют и влюбляются, заводят истории болезни и служебные романы, хранят свои врачебные тайны, борются с осложнениями у пациентов и в собственной личной жизни. И зачастую отношения с противоположным полом волнуют их не меньше, чем вопрос приобретения ими профессионального опыта.',
-    ),
-    TvShows(
-      id: 15,
-      imageName: const AssetImage(AppImages.domdracona),
-      title: 'Дом Дракона',
-      time: '21 авг 2022',
-      description:
-          'Члены дома Таргариенов оставляют обречённую Валирию и отправляются на запад, где обнаруживают огромную территорию, населённую враждующими королевствами.',
-    ),
-  ];
-  var _filteredTvShows = <TvShows>[];
-
-  final _searchController = TextEditingController();
-
-  void _searchTvShows() {
-    final query = _searchController.text;
-    if (query.isNotEmpty) {
-      _filteredTvShows = _tvShows.where((TvShows tvShow) {
-        return tvShow.title.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    }
-    if (query.isEmpty) {
-      _filteredTvShows = _tvShows;
-    }
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _filteredTvShows = _tvShows;
-    _searchController.addListener(_searchTvShows);
-  }
-
-  void _onTvShowTap(int index) {
-    final id = _tvShows[index].id;
-    Navigator.of(context).pushNamed(
-      MainNavigationRouteNames.tvShowsDetails,
-      arguments: id,
-    );
-  }
+class TvShowsListWidget extends StatelessWidget {
+  const TvShowsListWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<TvShowsListModel>(context);
+    if (model == null) return const SizedBox.shrink();
     return Stack(
       children: [
         ListView.builder(
           padding: const EdgeInsets.only(top: 70.0),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          itemCount: _filteredTvShows.length,
+          itemCount: model.tvShows.length,
           itemExtent: 163,
           itemBuilder: (BuildContext context, int index) {
-            final movie = _filteredTvShows[index];
+            model.showedTvShowsAtIndex(index);
+            final tvShow = model.tvShows[index];
+            final posterPath = tvShow.posterPath;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Stack(
@@ -115,7 +41,10 @@ class _TvShowsListWidgetState extends State<TvShowsListWidget> {
                     clipBehavior: Clip.hardEdge,
                     child: Row(
                       children: [
-                        Image(image: movie.imageName),
+                        posterPath != null
+                            ? Image.network(ApiClient.imageUrl(posterPath),
+                                width: 95)
+                            : const SizedBox.shrink(),
                         const SizedBox(width: 15),
                         Expanded(
                           child: Column(
@@ -123,7 +52,7 @@ class _TvShowsListWidgetState extends State<TvShowsListWidget> {
                             children: [
                               const SizedBox(height: 20),
                               Text(
-                                movie.title,
+                                tvShow.name,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -134,7 +63,7 @@ class _TvShowsListWidgetState extends State<TvShowsListWidget> {
                                 height: 5,
                               ),
                               Text(
-                                movie.time,
+                                model.stringFromDate(tvShow.firstAirDate),
                                 style: const TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -145,7 +74,7 @@ class _TvShowsListWidgetState extends State<TvShowsListWidget> {
                                 height: 20,
                               ),
                               Text(
-                                movie.description,
+                                tvShow.overview,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -161,9 +90,8 @@ class _TvShowsListWidgetState extends State<TvShowsListWidget> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () => _onTvShowTap(index),
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () => model.onTvShowTap(context, index)),
                   )
                 ],
               ),
@@ -173,7 +101,7 @@ class _TvShowsListWidgetState extends State<TvShowsListWidget> {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: TextField(
-            controller: _searchController,
+            onChanged: model.serachTvShow,
             decoration: InputDecoration(
               labelText: 'Поиск',
               filled: true,

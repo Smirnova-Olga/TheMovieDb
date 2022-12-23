@@ -6,6 +6,7 @@ import 'package:themoviedb/ui/widgets/movie_list/movie_list_model.dart';
 
 import 'package:themoviedb/ui/widgets/movie_list/movie_list_widget.dart';
 import 'package:themoviedb/ui/widgets/news/new_widget.dart';
+import 'package:themoviedb/ui/widgets/tv_shows_list/tv_shows_list_model.dart';
 import 'package:themoviedb/ui/widgets/tv_shows_list/tv_shows_list_widget.dart';
 
 class MainScreenWidget extends StatefulWidget {
@@ -18,6 +19,7 @@ class MainScreenWidget extends StatefulWidget {
 class _MainScreenWidgetState extends State<MainScreenWidget> {
   int _selectedTab = 0;
   final movieListModel = MovieListModel();
+  final tvShowsListModel = TvShowsListModel();
 
   void onSelectedTab(int index) {
     if (_selectedTab == index) return;
@@ -31,6 +33,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
     super.didChangeDependencies();
 
     movieListModel.setupLocale(context);
+    tvShowsListModel.setupLocale(context);
   }
 
   @override
@@ -53,7 +56,10 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             model: movieListModel,
             child: const MovieListWidget(),
           ),
-          const TvShowsListWidget(),
+          NotifierProvider(
+            model: tvShowsListModel,
+            child: const TvShowsListWidget(),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
