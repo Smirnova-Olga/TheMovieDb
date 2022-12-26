@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
 import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_main_info_widget.dart';
 import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_main_screen_cast_widget.dart';
+import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_model.dart';
 
 class TvShowsDetailsWidget extends StatefulWidget {
-  final int tvShowId;
   const TvShowsDetailsWidget({
     super.key,
-    required this.tvShowId,
   });
 
   @override
@@ -15,10 +15,16 @@ class TvShowsDetailsWidget extends StatefulWidget {
 
 class _TvShowsDetailsWidgetState extends State<TvShowsDetailsWidget> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    NotifierProvider.read<TvShowsDetailsModel>(context)?.setupLocale(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Соник 2 в кино'),
+        title: const _TitleWidget(),
       ),
       body: ColoredBox(
         color: const Color.fromRGBO(24, 23, 27, 1.0),
@@ -30,5 +36,15 @@ class _TvShowsDetailsWidgetState extends State<TvShowsDetailsWidget> {
         ),
       ),
     );
+  }
+}
+
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<TvShowsDetailsModel>(context);
+    return Text(model?.tvShowsDetails?.name ?? 'Загрузка...');
   }
 }
