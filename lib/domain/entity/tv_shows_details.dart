@@ -37,6 +37,7 @@ class TvShowsDetails {
   final String type;
   final double voteAverage;
   final int voteCount;
+
   TvShowsDetails({
     required this.backdropPath,
     required this.createdBy,
@@ -202,7 +203,7 @@ class ProductionCountrie {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Season {
-  final String airDate;
+  final String? airDate;
   final int episodeCount;
   final int id;
   final String name;

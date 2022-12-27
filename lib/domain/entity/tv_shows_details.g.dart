@@ -205,7 +205,7 @@ Map<String, dynamic> _$ProductionCountrieToJson(ProductionCountrie instance) =>
     };
 
 Season _$SeasonFromJson(Map<String, dynamic> json) => Season(
-      airDate: json['air_date'] as String,
+      airDate: json['air_date'] as String?,
       episodeCount: json['episode_count'] as int,
       id: json['id'] as int,
       name: json['name'] as String,
