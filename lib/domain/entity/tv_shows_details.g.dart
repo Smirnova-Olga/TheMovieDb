@@ -6,7 +6,7 @@ part of 'tv_shows_details.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TvShowsDetails _$TvShowDetailsFromJson(Map<String, dynamic> json) =>
+TvShowsDetails _$TvShowsDetailsFromJson(Map<String, dynamic> json) =>
     TvShowsDetails(
       backdropPath: json['backdrop_path'] as String?,
       createdBy: (json['created_by'] as List<dynamic>)
@@ -46,16 +46,16 @@ TvShowsDetails _$TvShowDetailsFromJson(Map<String, dynamic> json) =>
       popularity: (json['popularity'] as num).toDouble(),
       posterPath: json['poster_path'] as String?,
       productionCompanies: (json['production_companies'] as List<dynamic>)
-          .map((e) => ProductionCompanies.fromJson(e as Map<String, dynamic>))
+          .map((e) => ProductionCompanie.fromJson(e as Map<String, dynamic>))
           .toList(),
       productionCountries: (json['production_countries'] as List<dynamic>)
-          .map((e) => ProductionCountries.fromJson(e as Map<String, dynamic>))
+          .map((e) => ProductionCountrie.fromJson(e as Map<String, dynamic>))
           .toList(),
       seasons: (json['seasons'] as List<dynamic>)
           .map((e) => Season.fromJson(e as Map<String, dynamic>))
           .toList(),
       spokenLanguages: (json['spoken_languages'] as List<dynamic>)
-          .map((e) => SpokenLanguages.fromJson(e as Map<String, dynamic>))
+          .map((e) => SpokenLanguage.fromJson(e as Map<String, dynamic>))
           .toList(),
       status: json['status'] as String,
       tagline: json['tagline'] as String,
@@ -64,7 +64,7 @@ TvShowsDetails _$TvShowDetailsFromJson(Map<String, dynamic> json) =>
       voteCount: json['vote_count'] as int,
     );
 
-Map<String, dynamic> _$TvShowDetailsToJson(TvShowsDetails instance) =>
+Map<String, dynamic> _$TvShowsDetailsToJson(TvShowsDetails instance) =>
     <String, dynamic>{
       'backdrop_path': instance.backdropPath,
       'created_by': instance.createdBy.map((e) => e.toJson()).toList(),
@@ -157,7 +157,7 @@ Map<String, dynamic> _$LastEpisodeToAirToJson(LastEpisodeToAir instance) =>
     };
 
 NextEpisodeToAir _$NextEpisodeToAirFromJson(Map<String, dynamic> json) =>
-    const NextEpisodeToAir();
+    NextEpisodeToAir();
 
 Map<String, dynamic> _$NextEpisodeToAirToJson(NextEpisodeToAir instance) =>
     <String, dynamic>{};
@@ -176,16 +176,15 @@ Map<String, dynamic> _$NetworkToJson(Network instance) => <String, dynamic>{
       'origin_country': instance.originCountry,
     };
 
-ProductionCompanies _$ProductionCompaniesFromJson(Map<String, dynamic> json) =>
-    ProductionCompanies(
+ProductionCompanie _$ProductionCompanieFromJson(Map<String, dynamic> json) =>
+    ProductionCompanie(
       id: json['id'] as int,
       logoPath: json['logo_path'] as String?,
       name: json['name'] as String,
       originCountry: json['origin_country'] as String,
     );
 
-Map<String, dynamic> _$ProductionCompaniesToJson(
-        ProductionCompanies instance) =>
+Map<String, dynamic> _$ProductionCompanieToJson(ProductionCompanie instance) =>
     <String, dynamic>{
       'id': instance.id,
       'logo_path': instance.logoPath,
@@ -193,14 +192,13 @@ Map<String, dynamic> _$ProductionCompaniesToJson(
       'origin_country': instance.originCountry,
     };
 
-ProductionCountries _$ProductionCountriesFromJson(Map<String, dynamic> json) =>
-    ProductionCountries(
+ProductionCountrie _$ProductionCountrieFromJson(Map<String, dynamic> json) =>
+    ProductionCountrie(
       iso: json['iso_3166_1'] as String,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$ProductionCountriesToJson(
-        ProductionCountries instance) =>
+Map<String, dynamic> _$ProductionCountrieToJson(ProductionCountrie instance) =>
     <String, dynamic>{
       'iso_3166_1': instance.iso,
       'name': instance.name,
@@ -212,7 +210,7 @@ Season _$SeasonFromJson(Map<String, dynamic> json) => Season(
       id: json['id'] as int,
       name: json['name'] as String,
       overview: json['overview'] as String,
-      posterPath: json['poster_path'] as String,
+      posterPath: json['poster_path'] as String?,
       seasonNumber: json['season_number'] as int,
     );
 
@@ -226,14 +224,14 @@ Map<String, dynamic> _$SeasonToJson(Season instance) => <String, dynamic>{
       'season_number': instance.seasonNumber,
     };
 
-SpokenLanguages _$SpokenLanguagesFromJson(Map<String, dynamic> json) =>
-    SpokenLanguages(
+SpokenLanguage _$SpokenLanguageFromJson(Map<String, dynamic> json) =>
+    SpokenLanguage(
       englishName: json['iso_639_1'] as String,
-      iso: json['iso'] as String,
+      iso: json['iso'] as String?,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$SpokenLanguagesToJson(SpokenLanguages instance) =>
+Map<String, dynamic> _$SpokenLanguageToJson(SpokenLanguage instance) =>
     <String, dynamic>{
       'iso_639_1': instance.englishName,
       'iso': instance.iso,

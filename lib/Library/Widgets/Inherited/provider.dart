@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 
 class NotifierProvider<Model extends ChangeNotifier> extends StatefulWidget {
@@ -53,7 +51,7 @@ class _NotifierProviderState<Model extends ChangeNotifier>
 
   @override
   void dispose() {
-    if (widget.isManagingModel) {
+    if (widget.isManagingModel == true) {
       _model.dispose();
     }
     super.dispose();

@@ -26,14 +26,9 @@ class _TvShowsDetailsWidgetState extends State<TvShowsDetailsWidget> {
       appBar: AppBar(
         title: const _TitleWidget(),
       ),
-      body: ColoredBox(
-        color: const Color.fromRGBO(24, 23, 27, 1.0),
-        child: ListView(
-          children: const [
-            TvShowsDetailsMainInfoWidget(),
-            TvShowsDetailsMainScreenCastWidget(),
-          ],
-        ),
+      body: const ColoredBox(
+        color: Color.fromRGBO(24, 23, 27, 1.0),
+        child: _BodyWidget(),
       ),
     );
   }
@@ -46,5 +41,25 @@ class _TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = NotifierProvider.watch<TvShowsDetailsModel>(context);
     return Text(model?.tvShowsDetails?.name ?? 'Загрузка...');
+  }
+}
+
+class _BodyWidget extends StatelessWidget {
+  const _BodyWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<TvShowsDetailsModel>(context);
+    final tvShowsDetails = model?.tvShowsDetails;
+    if (tvShowsDetails == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return ListView(
+      children: const [
+        TvShowsDetailsMainInfoWidget(),
+        SizedBox(height: 30),
+        TvShowsDetailsMainScreenCastWidget(),
+      ],
+    );
   }
 }

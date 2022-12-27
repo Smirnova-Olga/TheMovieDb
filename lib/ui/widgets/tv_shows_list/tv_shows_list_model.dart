@@ -68,7 +68,7 @@ class TvShowsListModel extends ChangeNotifier {
   void onTvShowTap(BuildContext context, int index) {
     final id = _tvShows[index].id;
     Navigator.of(context).pushNamed(
-      MainNavigationRouteNames.movieDetails,
+      MainNavigationRouteNames.tvShowsDetails,
       arguments: id,
     );
   }

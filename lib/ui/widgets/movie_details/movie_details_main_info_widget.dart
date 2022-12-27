@@ -1,8 +1,10 @@
 // ignore_for_file: unused_element
 
 import 'package:flutter/material.dart';
-import 'package:themoviedb/resources/resources.dart';
+import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
+import 'package:themoviedb/domain/api_client/api_client.dart';
 import 'package:themoviedb/ui/widgets/elements/radius_score.dart';
+import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
 
 class MovieDetailsMainInfoWidget extends StatelessWidget {
   const MovieDetailsMainInfoWidget({super.key});
@@ -10,78 +12,84 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _TopPostersWidget(),
+        const _TopPosterWidget(),
         const Padding(
           padding: EdgeInsets.all(20.0),
           child: _MovieNameWidget(),
         ),
         const _ScoreWidget(),
         const _SummeryWidget(),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Text(
-              'Добро пожаловать на следующий уровень.',
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontSize: 15,
-                color: Colors.white.withOpacity(0.7),
-              ),
-            ),
-          ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: _overviewWidget(),
         ),
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Text(
-              'Обзор',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-            ),
-          ),
+        const Padding(
+          padding: EdgeInsets.all(10.0),
+          child: _DescriptionWidget(),
         ),
-        const Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Text(
-              'Поселившись в Грин Хилз, Соник стремится доказать, что у него есть все задатки настоящего героя. И геройское испытание не заставляет себя долго ждать: злодейский доктор Роботник вновь строит козни. На этот раз — с загадочным напарником Наклзом. Вместе они разыскивают бесценный изумруд, в котором заключены силы, способные уничтожать целые цивилизации. Соник объединяется с лисенком Тейлзом, чтобы отправиться в кругосветное путешествие и найти изумруд до того, как он попадет в плохие руки.',
-              style: TextStyle(
-                fontSize: 17,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
+        const SizedBox(height: 30),
       ],
+    );
+  }
+
+  Text _overviewWidget() {
+    return const Text(
+      'Overview',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
     );
   }
 }
 
-class _TopPostersWidget extends StatelessWidget {
-  const _TopPostersWidget({super.key});
+class _DescriptionWidget extends StatelessWidget {
+  const _DescriptionWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: const [
-        Image(
-          image: AssetImage(AppImages.sonic2Fon),
-        ),
-        Positioned(
-          top: 20,
-          left: 20,
-          bottom: 20,
-          child: Image(
-            image: AssetImage(AppImages.sonik),
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    return Text(
+      model?.movieDetails?.overview ?? '',
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+}
+
+class _TopPosterWidget extends StatelessWidget {
+  const _TopPosterWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    final backdropPath = model?.movieDetails?.backdropPath;
+    final posterPath = model?.movieDetails?.posterPath;
+    return AspectRatio(
+      aspectRatio: 390 / 219,
+      child: Stack(
+        children: [
+          backdropPath != null
+              ? Image.network(ApiClient.imageUrl(backdropPath))
+              : const SizedBox.shrink(),
+          Positioned(
+            top: 20,
+            left: 20,
+            bottom: 20,
+            child: posterPath != null
+                ? Image.network(ApiClient.imageUrl(posterPath))
+                : const SizedBox.shrink(),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -91,27 +99,32 @@ class _MovieNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      maxLines: 3,
-      textAlign: TextAlign.center,
-      text: const TextSpan(children: [
-        TextSpan(
-          text: 'Соник 2 в кино',
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    var year = model?.movieDetails?.releaseDate?.year.toString();
+    year = year != null ? ' ($year)' : '';
+    return Center(
+      child: RichText(
+        maxLines: 3,
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: model?.movieDetails?.title ?? '',
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            TextSpan(
+              text: year,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
-        TextSpan(
-          text: ' (2022)',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
-          ),
-        ),
-      ]),
+      ),
     );
   }
 }
@@ -121,32 +134,31 @@ class _ScoreWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final movieDetails =
+        NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
+    var voteAverage = movieDetails?.voteAverage ?? 0;
+    voteAverage = voteAverage * 10;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         TextButton(
           onPressed: () {},
           child: Row(
-            children: const [
+            children: [
               SizedBox(
                 width: 50,
                 height: 50,
                 child: RadiusScoreWidget(
-                  percent: 0.72,
+                  percent: voteAverage / 100,
                   fillColor: Colors.black,
                   lineColor: Colors.green,
                   freeColor: Colors.blueGrey,
                   lineWidth: 3,
-                  child: Text(
-                    '72%',
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
+                  child: Text('${voteAverage.toStringAsFixed(0)}%'),
                 ),
               ),
-              SizedBox(width: 10),
-              Text('Пользовательский счет'),
+              const SizedBox(width: 10),
+              const Text('Пользовательский счет'),
             ],
           ),
         ),
@@ -174,18 +186,40 @@ class _SummeryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Color.fromRGBO(22, 21, 25, 1.0),
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    if (model == null) return const SizedBox.shrink();
+    var texts = <String>[];
+    final releaseDate = model.movieDetails?.releaseDate;
+    if (releaseDate != null) {
+      texts.add(model.stringFromDate(releaseDate));
+    }
+    final productionCountries = model.movieDetails?.productionCountries;
+    if (productionCountries != null && productionCountries.isNotEmpty) {
+      texts.add('(${productionCountries.first.iso})');
+    }
+    final runtime = model.movieDetails?.runtime ?? 0;
+    final duration = Duration(minutes: runtime);
+    final hours = duration.inHours;
+    final minutes = duration.inMinutes.remainder(60);
+    texts.add('${hours}h ${minutes}m');
+    final genres = model.movieDetails?.genres;
+    if (genres != null && genres.isNotEmpty) {
+      var genresNames = <String>[];
+      for (var genr in genres) {
+        genresNames.add(genr.name);
+      }
+      texts.add(genresNames.join(', '));
+    }
+
+    return ColoredBox(
+      color: const Color.fromRGBO(22, 21, 25, 1.0),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 70,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
-          'APTA 01/04/2022 (ES) боевик, приключения, семейный, комедия 2h 2m',
+          texts.join(' '),
           maxLines: 3,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w400,

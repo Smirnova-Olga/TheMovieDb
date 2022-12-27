@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class RadiusScoreWidget extends StatelessWidget {
   final Widget child;
   final double percent;
+
   final Color fillColor;
   final Color lineColor;
   final Color freeColor;
@@ -39,6 +40,7 @@ class RadiusScoreWidget extends StatelessWidget {
 
 class MyPainter extends CustomPainter {
   final double percent;
+
   final Color fillColor;
   final Color lineColor;
   final Color freeColor;

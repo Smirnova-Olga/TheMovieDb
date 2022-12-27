@@ -15,6 +15,9 @@ class TvShowsDetailsModel extends ChangeNotifier {
 
   TvShowsDetailsModel(this.tvShowId);
 
+  String stringFromDate(DateTime? date) =>
+      date != null ? _dateFormat.format(date) : '';
+
   Future<void> setupLocale(BuildContext context) async {
     final locale = Localizations.localeOf(context).toLanguageTag();
     if (_locale == locale) return;

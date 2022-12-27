@@ -68,7 +68,7 @@ class MovieDetails {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class BelongsToCollection {
-  const BelongsToCollection();
+  BelongsToCollection();
 
   factory BelongsToCollection.fromJson(Map<String, dynamic> json) =>
       _$BelongsToCollectionFromJson(json);

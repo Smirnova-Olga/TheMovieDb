@@ -27,7 +27,9 @@ class MainNavigation {
           child: const AuthWidget(),
         ),
     MainNavigationRouteNames.mainScreen: (context) => NotifierProvider(
-        create: () => MainScreenModel(), child: const MainScreenWidget()),
+          create: () => MainScreenModel(),
+          child: const MainScreenWidget(),
+        ),
   };
   Route<Object> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
