@@ -233,6 +233,7 @@ class ApiClient {
       '/tv/$tvShowId',
       parser,
       <String, dynamic>{
+        'append_to_response': 'credits',
         'api_key': _apiKey,
         'language': locale,
       },

@@ -62,6 +62,8 @@ TvShowsDetails _$TvShowsDetailsFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String,
       voteAverage: (json['vote_average'] as num).toDouble(),
       voteCount: json['vote_count'] as int,
+      credits: TvShowsDetailsCredits.fromJson(
+          json['credits'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TvShowsDetailsToJson(TvShowsDetails instance) =>
@@ -100,6 +102,7 @@ Map<String, dynamic> _$TvShowsDetailsToJson(TvShowsDetails instance) =>
       'type': instance.type,
       'vote_average': instance.voteAverage,
       'vote_count': instance.voteCount,
+      'credits': instance.credits.toJson(),
     };
 
 CreatedBy _$CreatedByFromJson(Map<String, dynamic> json) => CreatedBy(

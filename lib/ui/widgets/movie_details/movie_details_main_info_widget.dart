@@ -163,7 +163,7 @@ class _ScoreWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              const Text('Пользовательский счет'),
+              const Text('User Score'),
             ],
           ),
         ),
