@@ -6,6 +6,7 @@ import 'package:themoviedb/ui/widgets/main_screen/main_screen_model.dart';
 import 'package:themoviedb/ui/widgets/main_screen/main_screen_widget.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_widget.dart';
+import 'package:themoviedb/ui/widgets/movie_trailer/show_trailer_widget.dart';
 import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_model.dart';
 import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_widget.dart';
 
@@ -14,6 +15,8 @@ abstract class MainNavigationRouteNames {
   static const mainScreen = '/';
   static const movieDetails = '/movie_details';
   static const tvShowsDetails = '/tv_shows_details';
+  static const movieTrailerWidget = '/movie_details/trailer';
+  static const tvShowsTrailerWidget = '/tv_shows_details/trailer';
 }
 
 class MainNavigation {
@@ -50,6 +53,18 @@ class MainNavigation {
             create: () => TvShowsDetailsModel(tvShowId),
             child: const TvShowsDetailsWidget(),
           ),
+        );
+      case MainNavigationRouteNames.movieTrailerWidget:
+        final arguments = settings.arguments;
+        final youtubeKey = arguments is String ? arguments : '';
+        return MaterialPageRoute(
+          builder: (context) => ShowTrailerWidget(youtubeKey: youtubeKey),
+        );
+      case MainNavigationRouteNames.tvShowsTrailerWidget:
+        final arguments = settings.arguments;
+        final youtubeKey = arguments is String ? arguments : '';
+        return MaterialPageRoute(
+          builder: (context) => ShowTrailerWidget(youtubeKey: youtubeKey),
         );
       default:
         const widget = Text('Navigation error!!!');

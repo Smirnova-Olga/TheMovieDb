@@ -29,7 +29,7 @@ class Actor {
   final String? profilePath;
   final String character;
   final String? creditId;
-  final int order;
+  final int? order;
   Actor({
     required this.adult,
     required this.gender,

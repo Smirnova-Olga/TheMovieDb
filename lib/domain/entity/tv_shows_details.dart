@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:themoviedb/domain/entity/date_parser.dart';
 import 'package:themoviedb/domain/entity/tv_shows_details_credits.dart';
+import 'package:themoviedb/domain/entity/tv_shows_details_videos.dart';
 
 part 'tv_shows_details.g.dart';
 
@@ -39,6 +40,7 @@ class TvShowsDetails {
   final double voteAverage;
   final int voteCount;
   final TvShowsDetailsCredits credits;
+  final TvShowsDetailsVideos videos;
 
   TvShowsDetails({
     required this.backdropPath,
@@ -73,6 +75,7 @@ class TvShowsDetails {
     required this.voteAverage,
     required this.voteCount,
     required this.credits,
+    required this.videos,
   });
   factory TvShowsDetails.fromJson(Map<String, dynamic> json) =>
       _$TvShowsDetailsFromJson(json);

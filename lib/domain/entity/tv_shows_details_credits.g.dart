@@ -35,7 +35,7 @@ Actor _$ActorFromJson(Map<String, dynamic> json) => Actor(
       profilePath: json['profile_path'] as String?,
       character: json['character'] as String,
       creditId: json['credit_id'] as String?,
-      order: json['order'] as int,
+      order: json['order'] as int?,
     );
 
 Map<String, dynamic> _$ActorToJson(Actor instance) => <String, dynamic>{

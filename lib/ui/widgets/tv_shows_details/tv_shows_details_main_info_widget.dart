@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
 import 'package:themoviedb/domain/api_client/api_client.dart';
+import 'package:themoviedb/ui/navigation/main_navigation.dart';
 import 'package:themoviedb/ui/widgets/elements/radius_score.dart';
 import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_model.dart';
 
@@ -137,6 +138,9 @@ class _ScoreWidget extends StatelessWidget {
     final tvShowsDetails =
         NotifierProvider.watch<TvShowsDetailsModel>(context)?.tvShowsDetails;
     var voteAverage = tvShowsDetails?.voteAverage ?? 0;
+    final videos = tvShowsDetails?.videos.results
+        .where((video) => video.type == 'Trailer' && video.site == 'YouTube');
+    final trailerKey = videos?.isNotEmpty == true ? videos?.first.key : null;
     voteAverage = voteAverage * 10;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -158,7 +162,7 @@ class _ScoreWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              const Text('Пользовательский счет'),
+              const Text('User Score'),
             ],
           ),
         ),
@@ -167,15 +171,20 @@ class _ScoreWidget extends StatelessWidget {
           height: 15,
           color: Colors.grey,
         ),
-        TextButton(
-          onPressed: () {},
-          child: Row(
-            children: const [
-              Icon(Icons.play_arrow),
-              Text('Play trailer'),
-            ],
-          ),
-        ),
+        trailerKey != null
+            ? TextButton(
+                onPressed: () => Navigator.of(context).pushNamed(
+                  MainNavigationRouteNames.movieTrailerWidget,
+                  arguments: trailerKey,
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.play_arrow),
+                    Text('Play Trailer'),
+                  ],
+                ),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }

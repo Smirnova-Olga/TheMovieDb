@@ -24,7 +24,7 @@ class TvShowsDetailsMainScreenCastWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 250,
+            height: 300,
             child: Scrollbar(
               child: _ActorListWidget(),
             ),
