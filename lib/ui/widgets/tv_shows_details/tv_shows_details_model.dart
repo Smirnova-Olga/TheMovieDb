@@ -13,6 +13,7 @@ class TvShowsDetailsModel extends ChangeNotifier {
   bool _isFavorite = false;
   String _locale = '';
   late DateFormat _dateFormat;
+  Future<void>? Function()? onSessionExpired;
 
   TvShowsDetails? get tvShowsDetails => _tvShowsDetails;
   bool get isFavorite => _isFavorite;
@@ -31,12 +32,16 @@ class TvShowsDetailsModel extends ChangeNotifier {
   }
 
   Future<void> loadDetails() async {
-    _tvShowsDetails = await _apiClient.tvShowsDetails(tvShowId, _locale);
-    final sessionId = await _sessionDataProvider.getSessionId();
-    if (sessionId != null) {
-      _isFavorite = await _apiClient.isFavoriteTvShow(tvShowId, sessionId);
+    try {
+      _tvShowsDetails = await _apiClient.tvShowsDetails(tvShowId, _locale);
+      final sessionId = await _sessionDataProvider.getSessionId();
+      if (sessionId != null) {
+        _isFavorite = await _apiClient.isFavoriteTvShow(tvShowId, sessionId);
+      }
+      notifyListeners();
+    } on ApiClientException catch (e) {
+      _handleApiClientException(e);
     }
-    notifyListeners();
   }
 
   Future<void> toggleFavorite() async {
@@ -47,12 +52,26 @@ class TvShowsDetailsModel extends ChangeNotifier {
 
     _isFavorite = !_isFavorite;
     notifyListeners();
-    await _apiClient.markAsFavorite(
-      accountId: accountId,
-      sessionId: sessionId,
-      mediaType: MediaType.tvShow,
-      mediaId: tvShowId,
-      isFavorite: _isFavorite,
-    );
+    try {
+      await _apiClient.markAsFavorite(
+        accountId: accountId,
+        sessionId: sessionId,
+        mediaType: MediaType.tvShow,
+        mediaId: tvShowId,
+        isFavorite: _isFavorite,
+      );
+    } on ApiClientException catch (e) {
+      _handleApiClientException(e);
+    }
+  }
+
+  void _handleApiClientException(ApiClientException exeption) {
+    switch (exeption.type) {
+      case ApiClientExceptionType.sessionExpired:
+        onSessionExpired?.call();
+        break;
+      default:
+        print(exeption);
+    }
   }
 }

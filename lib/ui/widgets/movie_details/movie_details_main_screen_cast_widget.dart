@@ -119,12 +119,12 @@ class _ActorListItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         actor.name,
-                        maxLines: 1,
+                        maxLines: 3,
                       ),
                       const SizedBox(height: 7),
                       Text(
                         actor.character,
-                        maxLines: 2,
+                        maxLines: 3,
                       ),
                     ],
                   ),
