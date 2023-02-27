@@ -1,38 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb/Library/Widgets/Inherited/provider.dart';
-import 'package:themoviedb/ui/widgets/auth/auth_model.dart';
-import 'package:themoviedb/ui/widgets/auth/auth_widget.dart';
-import 'package:themoviedb/ui/widgets/main_screen/main_screen_model.dart';
-import 'package:themoviedb/ui/widgets/main_screen/main_screen_widget.dart';
-import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
-import 'package:themoviedb/ui/widgets/movie_details/movie_details_widget.dart';
+import 'package:themoviedb/domain/factories/screen_factory.dart';
+
 import 'package:themoviedb/ui/widgets/movie_trailer/show_trailer_widget.dart';
-import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_model.dart';
-import 'package:themoviedb/ui/widgets/tv_shows_details/tv_shows_details_widget.dart';
 
 abstract class MainNavigationRouteNames {
+  static const loaderWidget = '/';
   static const auth = 'auth';
-  static const mainScreen = '/';
-  static const movieDetails = '/movie_details';
-  static const tvShowsDetails = '/tv_shows_details';
-  static const movieTrailerWidget = '/movie_details/trailer';
-  static const tvShowsTrailerWidget = '/tv_shows_details/trailer';
+  static const mainScreen = '/main_screen';
+  static const movieDetails = '/main_screen/movie_details';
+  static const tvShowsDetails = '/main_screen/tv_shows_details';
+  static const movieTrailerWidget =
+      '/main_screen/movie_details/movie_details/trailer';
+  static const tvShowsTrailerWidget =
+      '/main_screen/tv_shows_details/tv_shows_details/trailer';
 }
 
 class MainNavigation {
-  String initialRoute(bool isAuth) => isAuth
-      ? MainNavigationRouteNames.mainScreen
-      : MainNavigationRouteNames.auth;
+  static final _screenFactory = ScreenFactory();
 
   final routes = <String, Widget Function(BuildContext)>{
-    MainNavigationRouteNames.auth: (context) => NotifierProvider(
-          create: () => AuthModel(),
-          child: const AuthWidget(),
-        ),
-    MainNavigationRouteNames.mainScreen: (context) => NotifierProvider(
-          create: () => MainScreenModel(),
-          child: const MainScreenWidget(),
-        ),
+    MainNavigationRouteNames.loaderWidget: (_) => _screenFactory.makeLoader(),
+    MainNavigationRouteNames.auth: (_) => _screenFactory.makeAuth(),
+    MainNavigationRouteNames.mainScreen: (_) => _screenFactory.makeMainScreen(),
   };
   Route<Object> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -40,31 +29,24 @@ class MainNavigation {
         final arguments = settings.arguments;
         final movieId = arguments is int ? arguments : 0;
         return MaterialPageRoute(
-          builder: (context) => NotifierProvider(
-            create: () => MovieDetailsModel(movieId),
-            child: const MovieDetailsWidget(),
-          ),
+          builder: (_) => _screenFactory.makeMovieDetails(movieId),
         );
       case MainNavigationRouteNames.tvShowsDetails:
         final arguments = settings.arguments;
         final tvShowId = arguments is int ? arguments : 0;
         return MaterialPageRoute(
-          builder: (context) => NotifierProvider(
-            create: () => TvShowsDetailsModel(tvShowId),
-            child: const TvShowsDetailsWidget(),
-          ),
-        );
+            builder: (_) => _screenFactory.makeTvShowsDetails(tvShowId));
       case MainNavigationRouteNames.movieTrailerWidget:
         final arguments = settings.arguments;
         final youtubeKey = arguments is String ? arguments : '';
         return MaterialPageRoute(
-          builder: (context) => ShowTrailerWidget(youtubeKey: youtubeKey),
+          builder: (_) => ShowTrailerWidget(youtubeKey: youtubeKey),
         );
       case MainNavigationRouteNames.tvShowsTrailerWidget:
         final arguments = settings.arguments;
         final youtubeKey = arguments is String ? arguments : '';
         return MaterialPageRoute(
-          builder: (context) => ShowTrailerWidget(youtubeKey: youtubeKey),
+          builder: (_) => _screenFactory.makeMovieTrailer(youtubeKey),
         );
       default:
         const widget = Text('Navigation error!!!');
