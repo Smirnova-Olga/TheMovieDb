@@ -49,7 +49,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       body: IndexedStack(
         index: _selectedTab,
         children: [
-          const NewsWidget(),
+          // const NewsWidget(),
           NotifierProvider(
             create: () => movieListModel,
             isManagingModel: false,
@@ -65,10 +65,10 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedTab,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'News',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.home),
+          //   label: 'News',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.movie_filter),
             label: 'Films',

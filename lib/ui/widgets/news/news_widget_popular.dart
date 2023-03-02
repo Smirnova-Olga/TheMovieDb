@@ -12,7 +12,7 @@ class NewsWidgetPopular extends StatefulWidget {
 }
 
 class _NewsWidgetPopularState extends State<NewsWidgetPopular> {
-  final _catrgory = 'movies';
+  final _category = 'movies';
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,11 +28,10 @@ class _NewsWidgetPopularState extends State<NewsWidgetPopular> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
               DropdownButton<String>(
-                value: _catrgory,
-                onChanged: (catrgory) {},
+                value: _category,
+                onChanged: (category) {},
                 items: const [
                   DropdownMenuItem(value: 'movies', child: Text('Movies')),
-                  DropdownMenuItem(value: 'tv', child: Text('TV')),
                   DropdownMenuItem(value: 'tvShows', child: Text('TVShows')),
                 ],
               ),
