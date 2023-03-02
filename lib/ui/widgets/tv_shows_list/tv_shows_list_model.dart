@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:themoviedb/domain/api_client/api_client.dart';
+import 'package:themoviedb/domain/api_client/tv_show_api_client.dart';
 import 'package:themoviedb/domain/entity/popular_tvshows_response.dart';
 import 'package:themoviedb/domain/entity/tv_show.dart';
 import 'package:themoviedb/ui/navigation/main_navigation.dart';
 
 class TvShowsListModel extends ChangeNotifier {
-  final _apiClient = ApiClient();
+  final _apiClient = TvShowApiClient();
   final _tvShows = <TvShow>[];
   late int _currentPage;
   late int _totalPage;
