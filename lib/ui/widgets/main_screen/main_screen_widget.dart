@@ -42,7 +42,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         actions: [
           IconButton(
             onPressed: () => SessionDataProvider().setSessionId(null),
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.logout),
           )
         ],
       ),
