@@ -6,7 +6,6 @@ import 'package:themoviedb/ui/widgets/auth/auth_view_model.dart';
 import 'package:themoviedb/ui/widgets/auth/auth_widget.dart';
 import 'package:themoviedb/ui/widgets/loader_widget/loader_view_model.dart';
 import 'package:themoviedb/ui/widgets/loader_widget/loader_widget.dart';
-import 'package:themoviedb/ui/widgets/main_screen/main_screen_model.dart';
 import 'package:themoviedb/ui/widgets/main_screen/main_screen_widget.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_model.dart';
 import 'package:themoviedb/ui/widgets/movie_details/movie_details_widget.dart';
@@ -31,10 +30,7 @@ class ScreenFactory {
   }
 
   Widget makeMainScreen() {
-    return old_provider.NotifierProvider(
-      create: () => MainScreenModel(),
-      child: const MainScreenWidget(),
-    );
+    return const MainScreenWidget();
   }
 
   Widget makeMovieDetails(int movieId) {
